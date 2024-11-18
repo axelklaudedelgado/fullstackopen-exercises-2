@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
-require('dotenv').config();
+require('dotenv').config()
 
-const password = process.argv[2];
+const password = process.argv[2]
 if (!password) {
-    console.error('Please provide the MongoDB password as an argument');
-    process.exit(1);
+  console.error('Please provide the MongoDB password as an argument')
+  process.exit(1)
 }
 
-const url = process.env.MONGODB_URI.replace('<PASSWORD>', password);
+const url = process.env.MONGODB_URI.replace('<PASSWORD>', password)
 
 mongoose.set('strictQuery',false)
 
@@ -25,24 +25,24 @@ const name = process.argv[3]
 const number = process.argv[4]
 
 const person = new Person({
-    name: name,
-    number: number,
+  name: name,
+  number: number,
 })
 
 if (process.argv.length === 5) {
-    person.save().then(result => {
-        console.log(`added ${name} ${number} to phonebook`)
-        mongoose.connection.close()
-    })
+  person.save().then(result => {
+    console.log(`added ${name} ${number} to phonebook`)
+    mongoose.connection.close()
+  })
 } else if (process.argv.length === 4) {
   console.log('give number as argument')
   process.exit(1)
 } else if (process.argv.length === 3) {
   console.log('phonebook:')
-  Person.find({}).then(result => 
-    {result.forEach(person => {
-        console.log(`${person.name} ${person.number}`)
-    })
-    mongoose.connection.close()
-    })
+  Person.find({}).then(result =>
+  {result.forEach(person => {
+    console.log(`${person.name} ${person.number}`)
+  })
+  mongoose.connection.close()
+  })
 }

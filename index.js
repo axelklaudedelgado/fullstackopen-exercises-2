@@ -8,7 +8,7 @@ const cors = require('cors')
 app.use(cors({ origin: 'http://localhost:5173' }))
 app.use(express.json())
 app.use(express.static('dist'))
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :content'))
 
 morgan.token('content', function (request, response) { return JSON.stringify(request.body) })
 
@@ -16,33 +16,33 @@ app.get('/info', (request, response) => {
   const currentDateTime = new Date()
 
   Person.find({})
-  .then(persons => {
-    response.send(`
+    .then(persons => {
+      response.send(`
       <p>Phonebook has info for ${persons.length} people</p>
       <p>${currentDateTime}</p>
     `)
-  })
-  .catch(error => {
-    console.error(error.message)
-    response.status(500).json({ error: 'Failed to retrieve info' })
-  })
+    })
+    .catch(error => {
+      console.error(error.message)
+      response.status(500).json({ error: 'Failed to retrieve info' })
+    })
 })
 
 
 app.get('/api/persons', (request, response, next) => {
   Person.find({})
-  .then(persons => {
-    response.json(persons)
-  })
-  .catch(error => next(error))
+    .then(persons => {
+      response.json(persons)
+    })
+    .catch(error => next(error))
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
-  .then(person => {
-    response.json(person)
-  })
-  .catch(error => next(error))
+    .then(person => {
+      response.json(person)
+    })
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (request, response, next) => {
@@ -54,10 +54,10 @@ app.post('/api/persons', (request, response, next) => {
   })
 
   person.save()
-  .then(addedPerson => {
-    response.json(addedPerson)
-  })
-  .catch(error => next(error))
+    .then(addedPerson => {
+      response.json(addedPerson)
+    })
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -73,11 +73,11 @@ app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
 
   Person.findByIdAndUpdate(
-    request.params.id, 
+    request.params.id,
 
     { name, number },
     { new: true, runValidators: true, context: 'query' }
-  ) 
+  )
     .then(updatedPerson => {
       response.json(updatedPerson)
     })
@@ -99,7 +99,7 @@ const errorHandler = (error, req, res, next) => {
     return res.status(400).json({ error: error.message })
   }
 
-  next(error) 
+  next(error)
 }
 
 app.use(errorHandler)
