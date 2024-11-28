@@ -9,14 +9,14 @@ import BlogForm from './components/BlogForm.jsx'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notificationMessage, setNotificationMessage] = useState(null)
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    
+
     try {
       const user = await loginService.login({
         username, password,
@@ -56,14 +56,14 @@ const App = () => {
   }
 
   const deleteBlog = async (id) => {
-    await blogService.deleteBlog(id);
-    setBlogs(blogs.filter(blog => blog.id !== id));
-  };
+    await blogService.deleteBlog(id)
+    setBlogs(blogs.filter(blog => blog.id !== id))
+  }
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const App = () => {
         <form onSubmit={handleLogin}>
           <div>
             username
-              <input
+            <input
               type="text"
               value={username}
               name="Username"
@@ -92,7 +92,7 @@ const App = () => {
           </div>
           <div>
             password
-              <input
+            <input
               type="password"
               value={password}
               name="Password"
@@ -109,17 +109,17 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <Notification message={notificationMessage} color={'green'}/>
-      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p> 
+      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
       <Togglable buttonLabel={'create new blog'}>
         <BlogForm createBlog={addBlog} />
       </Togglable>
       {blogs
-      .sort((a, b) => b.likes - a.likes)
-      .map(blog => (
-        blog.user.id === user.id 
-          ? <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} removeBlog={deleteBlog} deleteButton={true} /> 
-          : <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} /> 
-      ))}
+        .sort((a, b) => b.likes - a.likes)
+        .map(blog => (
+          blog.user.id === user.id
+            ? <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} removeBlog={deleteBlog} deleteButton={true} />
+            : <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} />
+        ))}
     </div>
   )
 }

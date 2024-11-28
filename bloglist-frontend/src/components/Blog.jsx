@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
 const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
   const [visible, setVisible] = useState(false)
@@ -13,7 +13,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
 
   const incrementLikes = () => {
     updateLikes(
-      blog.id, 
+      blog.id,
       {
         title: blog.title,
         author: blog.author,
@@ -45,18 +45,18 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
       <p>likes {blog.likes} <button onClick={incrementLikes}>like</button></p>
       <p>{blog.author}</p>
       {deleteButton && (
-      <button onClick={deleteBlog}>
+        <button onClick={deleteBlog}>
         remove
-      </button>
+        </button>
       )}
     </div>
   )
 
   return (
     <div style={blogStyle}>
-      {!visible 
-      ? initialState() 
-      : collapsedState()} 
+      {!visible
+        ? initialState()
+        : collapsedState()}
     </div>
   )
 }
