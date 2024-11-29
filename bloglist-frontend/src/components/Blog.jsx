@@ -34,7 +34,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
 
   const initialState = () => (
     <div>
-      {blog.title} <button onClick={() => setVisible(true)}>view</button>
+      {blog.title} {blog.author} <button onClick={() => setVisible(true)}>view</button>
     </div>
   )
 
@@ -42,7 +42,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
     <div>
       <p>{blog.title} <button onClick={() => setVisible(false)}>hide</button></p>
       <p>{blog.url}</p>
-      <p>likes {blog.likes} <button onClick={incrementLikes}>like</button></p>
+      <p>likes {blog.likes} <button className='likeBtn' onClick={incrementLikes}>like</button></p>
       <p>{blog.author}</p>
       {deleteButton && (
         <button onClick={deleteBlog}>
@@ -53,7 +53,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
   )
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {!visible
         ? initialState()
         : collapsedState()}
