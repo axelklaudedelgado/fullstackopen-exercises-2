@@ -84,6 +84,7 @@ const App = () => {
           <div>
             username
             <input
+              data-testid='username'
               type="text"
               value={username}
               name="Username"
@@ -93,6 +94,7 @@ const App = () => {
           <div>
             password
             <input
+              data-testid='password'
               type="password"
               value={password}
               name="Password"
@@ -116,7 +118,7 @@ const App = () => {
       {blogs
         .sort((a, b) => b.likes - a.likes)
         .map(blog => (
-          blog.user.id === user.id
+          blog.user.id === user.id || blog.user === user.id
             ? <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} removeBlog={deleteBlog} deleteButton={true} />
             : <Blog key={blog.id} blog={blog} updateLikes={incrementLikes} />
         ))}

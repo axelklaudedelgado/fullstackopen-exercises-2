@@ -25,7 +25,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
   }
 
   const deleteBlog = () => {
-    if (confirm(`Remove blog ${blog.title} by ${blog.author}`) === true) {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`) === true) {
       removeBlog(blog.id)
     } else {
       alert('You canceled removal.')
@@ -34,7 +34,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
 
   const initialState = () => (
     <div>
-      {blog.title} {blog.author} <button onClick={() => setVisible(true)}>view</button>
+      <span data-testid='blog'>{blog.title} {blog.author} <button onClick={() => setVisible(true)}>view</button></span>
     </div>
   )
 
@@ -42,7 +42,7 @@ const Blog = ({ blog, updateLikes, removeBlog=null, deleteButton=false }) => {
     <div>
       <p>{blog.title} <button onClick={() => setVisible(false)}>hide</button></p>
       <p>{blog.url}</p>
-      <p>likes {blog.likes} <button className='likeBtn' onClick={incrementLikes}>like</button></p>
+      <p>likes <span data-testid='likes'>{blog.likes}</span> <button className='likeBtn' onClick={incrementLikes}>like</button></p>
       <p>{blog.author}</p>
       {deleteButton && (
         <button onClick={deleteBlog}>
